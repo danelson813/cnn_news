@@ -1,5 +1,5 @@
 from utils.util_selenium import get_soup, save_soup, retreive_soup
-from utils.util import setup_logger, does_it_exist, to_sqlite3
+from utils.util import setup_logger, does_it_exist, to_sqlite3, dataframe
 import pandas as pd
 
 logger = setup_logger()
@@ -27,7 +27,6 @@ for article in articles:
     }
     results.append(result)
 
-df = pd.DataFrame(results)
-df.to_csv('data/results.csv', index=False)
+df = dataframe(results)
 
 to_sqlite3(df)

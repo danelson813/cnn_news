@@ -4,7 +4,7 @@ import pandas as pd
 import sqlite3 as sql
 
 
-def setup_logger():
+def setup_logger() -> 'logging.Logger':
     logger = logging.getLogger("my_logger")
     logger.setLevel(logging.INFO)
 
@@ -36,16 +36,17 @@ def does_it_exist(filename: str) -> bool:
     return check_file
 
 
-def dataframe(list: list):
+def dataframe(list: list) -> 'pd.core.frame.DataFrame':
     df = pd.DataFrame(list)
     df.to_csv("data/results.csv", index=False)
+    return df
 
 
 def to_sqlite3(df: 'pd.core.frame.DataFrame'):
+    # write the new DataFrame to a new SQLite table
     conn = sql.connect('data/cnn_news.sqlite')
-    # write tdhe new DataFrame to a new SQLite table
     df.to_sql("news", conn, if_exists='replace')
     conn.close()
 
 if __name__ == "__main__":
-    dataframe([{'a':2}])
+    setup_logger()
